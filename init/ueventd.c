@@ -29,6 +29,9 @@
 #include "util.h"
 #include "devices.h"
 #include "ueventd_parser.h"
+#include "property_service.h"
+
+char boot_device[PROP_VALUE_MAX];
 
 static char hardware[32];
 static unsigned revision = 0;
@@ -83,6 +86,8 @@ int ueventd_main(int argc, char **argv)
 
     snprintf(tmp, sizeof(tmp), "/ueventd.%s.rc", hardware);
     ueventd_parse_config_file(tmp);
+
+    property_get("ro.boot.bootdevice", boot_device);
 
     device_init();
 
